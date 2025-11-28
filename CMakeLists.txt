@@ -6,6 +6,11 @@ project(UnchainedTogether CXX C ASM_MASM)
 
 set(SRC_DIR "${PROJECT_SOURCE_DIR}/src")
 
+# Set C++ standard globally BEFORE fetching modules
+set(CMAKE_CXX_STANDARD 23)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
 # Fetch modules
 message("\nFetching modules")
 include(cmake_scripts/git.cmake)
