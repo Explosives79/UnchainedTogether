@@ -1071,6 +1071,28 @@ namespace big
 										ImGui::Checkbox("WingsSelected", &g_customgi->WingsSelected);
 										ImGui::Text("SelectedGameMode %d", g_customgi->SelectedGameMode);*/
 
+										ImGui::SeparatorText("Max Players");
+										ImGui::Text("Current Max Players: %d", g_customgi->MaxPlayers);
+										static int new_max_players = 4;
+										ImGui::InputInt("New Max Players", &new_max_players);
+										if (new_max_players < 1) new_max_players = 1;
+										if (new_max_players > 100) new_max_players = 100;
+
+										if (ImGui::Button("Set Max Players"))
+										{
+											g_customgi->MaxPlayers = new_max_players;
+											LOG(INFO) << "Set MaxPlayers to: " << new_max_players;
+										}
+										ImGui::SameLine();
+										if (ImGui::Button("Reset to 4"))
+										{
+											g_customgi->MaxPlayers = 4;
+											new_max_players = 4;
+											LOG(INFO) << "Reset MaxPlayers to 4";
+										}
+
+										ImGui::Separator();
+
 										if (ImGui::Button("Unlock Wings"))
 										{
 											try
