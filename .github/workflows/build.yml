@@ -7,10 +7,12 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
+      with:
+        submodules: recursive
 
     - name: Setup MSVC
-      uses: microsoft/setup-msbuild@v1.1
+      uses: microsoft/setup-msbuild@v2
 
     - name: Configure CMake
       run: cmake -B build -G "Visual Studio 17 2022" -A x64 -DCMAKE_POLICY_VERSION_MINIMUM=3.5
@@ -18,8 +20,11 @@ jobs:
     - name: Build
       run: cmake --build build --config RelWithDebInfo
 
+    - name: Rename DLL
+      run: Rename-Item -Path "build/RelWithDebInfo/d3d12_.dll" -NewName "d3d12.dll"
+
     - name: Upload artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: d3d12-dll
-        path: build/RelWithDebInfo/d3d12_.dll
+        path: build/RelWithDebInfo/d3d12.dll
